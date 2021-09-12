@@ -1,0 +1,1037 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Laravel API FutureFlights",
+        "description": "L5 Swagger Api",
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8000"
+        }
+    ],
+    "paths": {
+        "/api/aerolineas": {
+            "get": {
+                "tags": [
+                    "Aerolíneas"
+                ],
+                "summary": "Mostrar lista de aerolineas",
+                "operationId": "App\\Http\\Controllers\\AerolineaController::index",
+                "responses": {
+                    "200": {
+                        "description": "Devuelve todas las aerolíneas almacenadas.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            },
+                                            "nombre": {
+                                                "type": "string"
+                                            },
+                                            "puntuacion": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error: Bad Request."
+                    },
+                    "500": {
+                        "description": "Error: Internal Server Error."
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Aerolíneas"
+                ],
+                "summary": "Almacenar aerolineas",
+                "operationId": "App\\Http\\Controllers\\AerolineaController::store",
+                "requestBody": {
+                    "description": "Aerolíneas web scraper.",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "nombre": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Almacena todas las aerolíneas.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            },
+                                            "nombre": {
+                                                "type": "string"
+                                            },
+                                            "puntuacion": {
+                                                "type": "number"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error: Bad Request."
+                    },
+                    "500": {
+                        "description": "Error: Internal Server Error."
+                    }
+                }
+            }
+        },
+        "/api/aerolineas/top": {
+            "get": {
+                "tags": [
+                    "Aerolíneas"
+                ],
+                "summary": "Mostrar lista de las 10 mejores aerolineas",
+                "operationId": "App\\Http\\Controllers\\AerolineaController::getTopScore",
+                "responses": {
+                    "200": {
+                        "description": "Devuelve todas las 10 aerolíneas almacenadas en función de su valoración.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            },
+                                            "nombre": {
+                                                "type": "string"
+                                            },
+                                            "puntuacion": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error: Bad Request."
+                    },
+                    "500": {
+                        "description": "Internal Server Error."
+                    }
+                }
+            }
+        },
+        "/api/aerolineas/{id_aeropuerto}": {
+            "get": {
+                "tags": [
+                    "Aerolíneas"
+                ],
+                "summary": "Mostrar la información principal de los vuelos de la fecha actual, ordenada por valoración de aerolíneas de mayor a menor.",
+                "operationId": "App\\Http\\Controllers\\AerolineaController::getAerolineasXpuntuacion",
+                "parameters": [
+                    {
+                        "name": "id_aeropuerto",
+                        "in": "path",
+                        "description": "Identificador del vuelo asignado en la base de datos.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Devuelve la información principal de los vuelos ordenados por valoración de aerolíneas.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "código_vuelo": {
+                                                "type": "string"
+                                            },
+                                            "nombre_aerolínea": {
+                                                "type": "string"
+                                            },
+                                            "hora_programada": {
+                                                "type": "string"
+                                            },
+                                            "hora_salida": {
+                                                "type": "string"
+                                            },
+                                            "estado": {
+                                                "type": "int"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error: Bad Request."
+                    },
+                    "500": {
+                        "description": "Error: Internal Server Error."
+                    }
+                }
+            }
+        },
+        "/api/aeropuertos": {
+            "get": {
+                "tags": [
+                    "Aeropuertos"
+                ],
+                "summary": "Mostrar lista de aeropuertos con toda su información.",
+                "operationId": "App\\Http\\Controllers\\AeropuertoController::index",
+                "responses": {
+                    "200": {
+                        "description": "Devuelve toda la información de todos los aeropuertos almacenados.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            },
+                                            "nombre": {
+                                                "type": "string"
+                                            },
+                                            "ciudad": {
+                                                "type": "string"
+                                            },
+                                            "siglas": {
+                                                "type": "string"
+                                            },
+                                            "puntuacion": {
+                                                "type": "number"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error en la consulta."
+                    },
+                    "404": {
+                        "description": "Not Found."
+                    }
+                }
+            }
+        },
+        "/api/aeropuertos/nombre": {
+            "get": {
+                "tags": [
+                    "Aeropuertos"
+                ],
+                "summary": "Mostrar lista de nombres y siglas de aeropuertos",
+                "operationId": "App\\Http\\Controllers\\AeropuertoController::mostrarNombreAeropuertos",
+                "responses": {
+                    "200": {
+                        "description": "Devuelve todas los aeropuertos con sus siglas almacenadas.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            },
+                                            "nombre": {
+                                                "type": "string"
+                                            },
+                                            "siglas": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error en la consulta."
+                    },
+                    "404": {
+                        "description": "Not Found."
+                    }
+                }
+            }
+        },
+        "/api/aeropuertos/top": {
+            "get": {
+                "tags": [
+                    "Aeropuertos"
+                ],
+<<<<<<< Updated upstream
+                "summary": "Mostrar lista de los 10 mejores aeropuertos por valoración",
+                "operationId": "App\\Http\\Controllers\\AeropuertoController::getTopScore",
+                "responses": {
+                    "200": {
+                        "description": "Devuelve el top de los 10 mejores aeropuertos por valoración.",
+=======
+                "summary": "Devuelve el top de los aeropuertos mas chachis.",
+                "operationId": "App\\Http\\Controllers\\AeropuertoController::getTopScore",
+                "responses": {
+                    "200": {
+                        "description": "Devuelve el top de los aeropuertos mas chachis.",
+>>>>>>> Stashed changes
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            },
+                                            "nombre": {
+                                                "type": "string"
+                                            },
+                                            "ciudad": {
+                                                "type": "string"
+                                            },
+                                            "siglas": {
+                                                "type": "string"
+                                            },
+                                            "puntuacion": {
+                                                "type": "number"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error: Bad Request."
+                    },
+                    "500": {
+                        "description": "Error: Internal Server Error."
+                    }
+                }
+            }
+        },
+        "/api/clima": {
+            "post": {
+                "tags": [
+                    "Clima"
+                ],
+                "summary": "Almacenar Clima",
+                "operationId": "App\\Http\\Controllers\\ClimaController::store",
+                "requestBody": {
+                    "description": "Provide company search parameter",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "aeropuerto": {
+                                        "type": "string"
+                                    },
+                                    "": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "fecha": {
+                                                    "type": "string"
+                                                },
+                                                "hora": {
+                                                    "type": "string"
+                                                },
+                                                "cielo": {
+                                                    "type": "string"
+                                                },
+                                                "temperatura": {
+                                                    "type": "integer"
+                                                },
+                                                "lluvia": {
+                                                    "type": "number"
+                                                },
+                                                "porcentajeLluvia": {
+                                                    "type": "integer"
+                                                },
+                                                "nubes": {
+                                                    "type": "integer"
+                                                },
+                                                "viento": {
+                                                    "type": "integer"
+                                                },
+                                                "rafaga": {
+                                                    "type": "integer"
+                                                },
+                                                "direccion_viento": {
+                                                    "type": "string"
+                                                },
+                                                "humedad": {
+                                                    "type": "integer"
+                                                },
+                                                "presion": {
+                                                    "type": "integer"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Almacena el clima para cada uno de los aeropuertos.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            },
+                                            "id_aeropuerto": {
+                                                "type": "integer"
+                                            },
+                                            "date_time": {
+                                                "type": "string"
+                                            },
+                                            "hora": {
+                                                "type": "string"
+                                            },
+                                            "cielo": {
+                                                "type": "string"
+                                            },
+                                            "temperatura": {
+                                                "type": "integer"
+                                            },
+                                            "lluvia": {
+                                                "type": "number"
+                                            },
+                                            "porcentajeLluvia": {
+                                                "type": "integer"
+                                            },
+                                            "nubes": {
+                                                "type": "integer"
+                                            },
+                                            "viento": {
+                                                "type": "integer"
+                                            },
+                                            "rafaga": {
+                                                "type": "integer"
+                                            },
+                                            "direccion_viento": {
+                                                "type": "string"
+                                            },
+                                            "humedad": {
+                                                "type": "integer"
+                                            },
+                                            "presion": {
+                                                "type": "integer"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error: Bad Request."
+                    },
+                    "500": {
+                        "description": "Error: Internal Server Error."
+                    }
+                }
+            }
+        },
+        "/api/aeropuertos/reviews": {
+            "post": {
+                "tags": [
+                    "Aeropuertos"
+                ],
+                "summary": "Almacenar las reviews de los aeropuertos.",
+                "operationId": "App\\Http\\Controllers\\ReviewController::guardarReviewsAeropuertos",
+                "requestBody": {
+                    "description": "Reviews de aeropuertos del web scraper.",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "aeropuerto": {
+                                        "type": "string"
+                                    },
+                                    "": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "opinion": {
+                                                    "type": "string"
+                                                },
+                                                "compound": {
+                                                    "type": "number"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Almacena todas las reviews de los aeropuertos.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "": {
+                                            "properties": {
+                                                "opinion": {
+                                                    "type": "string"
+                                                },
+                                                "compound": {
+                                                    "type": "number"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error: Bad Request."
+                    },
+                    "500": {
+                        "description": "Error: Internal Server Error."
+                    }
+                }
+            }
+        },
+        "/api/aerolineas/reviews": {
+            "post": {
+                "tags": [
+                    "Aerolíneas"
+                ],
+                "summary": "Almacenar las reviews de los aeropuertos.",
+                "operationId": "App\\Http\\Controllers\\ReviewController::guardarReviewsAerolineas",
+                "requestBody": {
+                    "description": "Reviews de aerolíneas del web scraper.",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "aerolínea": {
+                                        "type": "string"
+                                    },
+                                    "": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "opinion": {
+                                                    "type": "string"
+                                                },
+                                                "compound": {
+                                                    "type": "number"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Almacena todas las reviews de los aerolíneas.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "": {
+                                            "properties": {
+                                                "opinion": {
+                                                    "type": "string"
+                                                },
+                                                "compound": {
+                                                    "type": "number"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error: Bad Request."
+                    },
+                    "500": {
+                        "description": "Error: Internal Server Error."
+                    }
+                }
+            }
+        },
+        "/api/vuelos": {
+            "get": {
+                "tags": [
+                    "Vuelos"
+                ],
+                "summary": "Mostrar la información principal de los vuelos por orden de fecha.",
+                "operationId": "App\\Http\\Controllers\\VueloController::getVuelos",
+                "responses": {
+                    "200": {
+                        "description": "Devuelve la información principal de los vuelos por orden de fecha correctamente.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            },
+                                            "código_vuelo": {
+                                                "type": "string"
+                                            },
+                                            "siglas_aeropuerto_salida": {
+                                                "type": "string"
+                                            },
+                                            "nombre_aerolínea": {
+                                                "type": "string"
+                                            },
+                                            "aeropuerto_destino": {
+                                                "type": "string"
+                                            },
+                                            "date_time": {
+                                                "type": "date"
+                                            },
+                                            "hora_programada": {
+                                                "type": "string"
+                                            },
+                                            "hora_salida": {
+                                                "type": "string"
+                                            },
+                                            "estado": {
+                                                "type": "int"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error: Bad Request."
+                    },
+                    "500": {
+                        "description": "Error: Internal Server Error."
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Vuelos"
+                ],
+                "summary": "Almacenar vuelos",
+                "operationId": "App\\Http\\Controllers\\VueloController::store",
+                "requestBody": {
+                    "description": "Vuelos del web scraper.",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "aeropuerto": {
+                                        "type": "string"
+                                    },
+                                    "": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "fecha": {
+                                                    "type": "string"
+                                                },
+                                                "codigoVuelo": {
+                                                    "type": "string"
+                                                },
+                                                "destino": {
+                                                    "type": "string"
+                                                },
+                                                "aerolinea": {
+                                                    "type": "integer"
+                                                },
+                                                "horaProgramada": {
+                                                    "type": "number"
+                                                },
+                                                "horaReal": {
+                                                    "type": "integer"
+                                                },
+                                                "estado": {
+                                                    "type": "integer"
+                                                },
+                                                "terminal": {
+                                                    "type": "integer"
+                                                },
+                                                "distancia": {
+                                                    "type": "integer"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Almacena todos los vuelos. Si ya existen, se actualizan sus estados y horas programadas.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer"
+                                        },
+                                        "fecha": {
+                                            "type": "string"
+                                        },
+                                        "codigo_vuelo": {
+                                            "type": "string"
+                                        },
+                                        "aeropuerto_destino": {
+                                            "type": "string"
+                                        },
+                                        "id_aerolinea": {
+                                            "type": "integer"
+                                        },
+                                        "id_aeropuerto_salida": {
+                                            "type": "integer"
+                                        },
+                                        "hora_programada": {
+                                            "type": "string"
+                                        },
+                                        "hora_salida": {
+                                            "type": "string"
+                                        },
+                                        "estado": {
+                                            "type": "integer"
+                                        },
+                                        "terminal": {
+                                            "type": "string"
+                                        },
+                                        "distancia": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error: Bad Request."
+                    },
+                    "500": {
+                        "description": "Error: Internal Server Error."
+                    }
+                }
+            }
+        },
+        "/api/vuelos/tabla/{id_aeropuerto}": {
+            "get": {
+                "tags": [
+                    "Vuelos"
+                ],
+                "summary": "Mostrar la información principal de los vuelos de la fecha actual.",
+                "operationId": "App\\Http\\Controllers\\VueloController::getVuelos_tabla_id",
+                "parameters": [
+                    {
+                        "name": "id_aeropuerto",
+                        "in": "path",
+                        "description": "Identificador del vuelo asignado en la base de datos.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Devuelve la información principal de los vuelos de la fecha actual de la petición.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "código_vuelo": {
+                                                "type": "string"
+                                            },
+                                            "nombre_aerolínea": {
+                                                "type": "string"
+                                            },
+                                            "siglas_aeropuerto_salida": {
+                                                "type": "string"
+                                            },
+                                            "hora_programada": {
+                                                "type": "string"
+                                            },
+                                            "hora_salida": {
+                                                "type": "string"
+                                            },
+                                            "estado": {
+                                                "type": "int"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error: Bad Request."
+                    },
+                    "500": {
+                        "description": "Error: Internal Server Error."
+                    }
+                }
+            }
+        },
+        "/api/vuelos/{codigo_vuelo}/{id_aeropuerto}/{fecha}": {
+            "get": {
+                "tags": [
+                    "Vuelos"
+                ],
+                "summary": "Mostrar la información recopilada de un vuelo específico buscado.",
+                "operationId": "App\\Http\\Controllers\\VueloController::getInfoVuelos_espec",
+                "parameters": [
+                    {
+                        "name": "codigo_vuelo",
+                        "in": "path",
+                        "description": "Código de vuelo asignado.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id_aeropuerto",
+                        "in": "path",
+                        "description": "Identificador del vuelo asignado en la base de datos.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "fecha",
+                        "in": "path",
+                        "description": "Fecha de salida del vuelo.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Devuelve la información principal de un vuelo específico, a través del su código, fecha y aeropuertos de salida.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "código_vuelo": {
+                                                "type": "string"
+                                            },
+                                            "nombre_aerolínea": {
+                                                "type": "string"
+                                            },
+                                            "nombre_aeropuerto": {
+                                                "type": "string"
+                                            },
+                                            "siglas_aeropuerto_salida": {
+                                                "type": "string"
+                                            },
+                                            "aeropuerto_destino": {
+                                                "type": "string"
+                                            },
+                                            "terminal": {
+                                                "type": "string"
+                                            },
+                                            "hora_programada": {
+                                                "type": "string"
+                                            },
+                                            "hora_salida": {
+                                                "type": "string"
+                                            },
+                                            "estado": {
+                                                "type": "int"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error: Bad Request."
+                    },
+                    "500": {
+                        "description": "Error: Internal Server Error."
+                    }
+                }
+            }
+        },
+        "/api/vuelos/predecir/{estado}": {
+            "get": {
+                "tags": [
+                    "Vuelos"
+                ],
+                "summary": "Recoge toda la información asociada a un id de un vuelo.",
+                "operationId": "App\\Http\\Controllers\\VueloController::getDatosPrediccion",
+                "parameters": [
+                    {
+                        "name": "estado",
+                        "in": "path",
+                        "description": "Datos que indica el estado del vuelo.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Devuelta la información de las predicciones de los vuelos de manera correcta.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id_vuelo": {
+                                                "type": "integer"
+                                            },
+                                            "id_aerolinea": {
+                                                "type": "integer"
+                                            },
+                                            "id_aeropuerto": {
+                                                "type": "integer"
+                                            },
+                                            "date_time": {
+                                                "type": "date"
+                                            },
+                                            "hora_programada": {
+                                                "type": "string"
+                                            },
+                                            "hora_salida": {
+                                                "type": "string"
+                                            },
+                                            "cielo": {
+                                                "type": "string"
+                                            },
+                                            "temperatura": {
+                                                "type": "integer"
+                                            },
+                                            "lluvia": {
+                                                "type": "double"
+                                            },
+                                            "porcentajeLluvia": {
+                                                "type": "integer"
+                                            },
+                                            "nubes": {
+                                                "type": "integer"
+                                            },
+                                            "viento": {
+                                                "type": "integer"
+                                            },
+                                            "rafaga": {
+                                                "type": "integer"
+                                            },
+                                            "direccion_viento": {
+                                                "type": "string"
+                                            },
+                                            "humedad": {
+                                                "type": "integer"
+                                            },
+                                            "presion": {
+                                                "type": "integer"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error: Bad Request."
+                    },
+                    "500": {
+                        "description": "Error: Internal Server Error."
+                    }
+                }
+            }
+        }
+    }
+}
